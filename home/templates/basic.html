@@ -1,0 +1,74 @@
+{% load bootstrap4 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Кол Арын{% endblock %} - Алдын Кушкаш</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container-fluid">
+        <header class="row header">
+            <div class="row brand">
+                <p class="description" href="basic.html">
+                    <img class="logo" src="../static/images/logo.svg" alt="Logo" width="35" height="35">
+                    Тыва Республиканын уруглар сеткуулу
+                </p>
+                <span class="nullplus">0+</span>
+            </div>
+            <span class="main-name">Алдын кушкаш</span>
+            <div class= "row nav-login">
+                <ul class = "col nav">
+                    <li class="nav-item"><a class="nav-link" href="#">Регистрация</a> </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">Пpoфиль</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Moи объявления</a>
+                            <a class="dropdown-item" href="#">Изменить личные данные</a>
+                            <a class="dropdown-item" href="#">Изменить пароль</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Выйти</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Удалить</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Вход</a></li>
+                </ul>
+            </div>
+        </header>
+        <nav class="row menu">
+            <ul class="row site-menu list-unstyled">
+                <li><a href="#"><div class="menu-item">Кол арын</div></a></li>
+                <li><a class="root" href="{% url 'home:other' page='about' %}"><div class="menu-item">Редакция</div></a></li>
+                <li><a href="#"><div class="menu-item">Харылзажыры</div></a></li>
+            </ul>
+        </nav>
+        <main class="row">
+            <aside class="col-4 col-lg-2 sidebar">
+                Рубрики
+            </aside>
+            <div class="col-8 col-lg-10 content">
+                <h1>Cодержимое</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa dicta facere ipsam ipsum laudantium
+            quos saepe. Consectetur corporis deleniti eius explicabo illo necessitatibus odio officiis, quo soluta
+            sunt ullam unde?</p>
+            </div>
+
+        </main>
+
+        <footer class="row footer">
+            <p>Копирайт</p>
+        </footer>
+    </div>
+    <div>Автор иконок: <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/ru/" title="Flaticon">www.flaticon.com</a></div>
+</body>
+</html>

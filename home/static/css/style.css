@@ -1,0 +1,92 @@
+/*@font-face {
+    font-family: ;
+}*/
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+.header {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff871c;
+    padding-top: 10px;
+}
+.brand {
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100vw - 40px);
+}
+.logo {
+    width: 35px;
+    height: 35px;
+}
+.description, .nullplus {
+    color: white;
+    font-weight: bold;
+}
+.main-name {
+    color: #fff;
+    font-size: 80px;
+    font-weight: 800;
+    text-shadow: 4px 4px 3px gold;
+}
+.header .nav-login {
+    align-self: flex-end;
+    margin-right: 20px;
+}
+.nav a {
+    color: white;
+    font-weight: bold;
+}
+.menu {
+    justify-content: center;
+    align-items: center;
+    /*grid-area: n;*/
+    background-color: brown;
+    height: 50px;
+}
+.site-menu {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    list-style: none;
+}
+.site-menu div {
+    margin: 0;
+    padding: 0 20px;
+    height: 100%;
+}
+.site-menu div:hover {
+    background-color: #ff871c;
+    height: 50px;
+}
+.site-menu a {
+    display: flex;
+    align-self: center;
+    color: white;
+    font-weight: bold;
+    margin: 0;
+}
+.site-menu a:hover {
+    color: white;
+    font-weight: bold;
+    margin: 0;
+    text-decoration: none;
+}
+.menu-item {
+    display: flex;
+    align-items: center;
+}
+.content {
+    /*grid-area: c;*/
+    background-color: grey;
+}
+.sidebar {
+    /*grid-area: s;*/
+    background-color: orangered;
+}
+.footer {
+    /*grid-area: f;*/
+    background-color: #ff871c;
+}
