@@ -6,7 +6,7 @@ from django.template.loader import get_template
 def index(request):
     return render(request, 'home/index.html')
 
-def other_page(request, page):
+def about_page(request, page):
     try:
         template = get_template('home/' + page + '.html')
     except TemplateDoesNotExist:

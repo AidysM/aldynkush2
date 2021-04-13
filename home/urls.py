@@ -1,11 +1,11 @@
 from django.urls import path
 
-from .views import index, other_page
+from .views import index, about_page
 
 app_name = 'home'
 
 urlpatterns = [
-    path('<str:page>/', other_page, name='other'),
+    path('<str:page>/', about_page, name='about'),
     path('', index, name='index')
 ]
 

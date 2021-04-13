@@ -42,10 +42,10 @@ body {
     font-weight: bold;
 }
 .main-name {
-    font-family: Tuv Font, serif;
+    font-family: "Tuva Bold", serif;
 
     color: #fff;
-    font-size: 80px;
+    font-size: 100px;
     font-weight: 800;
     text-shadow: 4px 4px 3px gold;
 }

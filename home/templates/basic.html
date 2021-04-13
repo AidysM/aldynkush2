@@ -9,7 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{% block title %}Кол Арын{% endblock %} - Алдын Кушкаш</title>
-
+    <link rel="stylesheet" href="{% static 'fonts/ttbun___.TTF' %}">
+    <link rel="stylesheet" href="{% static 'fonts/ttbui___.TTF' %}">
+    <link rel="stylesheet" href="{% static 'fonts/ttbub___.TTF' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -20,7 +22,7 @@
             <div class="row brand">
                 <p class="description" href="basic.html">
                     <img class="logo" src="../static/images/logo.svg" alt="Logo" width="35" height="35">
-                    Тыва Республиканын уруглар сеткуулу
+                    Тыва Республиканың уруглар сеткүүлү
                 </p>
                 <span class="nullplus">0+</span>
             </div>
@@ -47,24 +49,21 @@
         </header>
         <nav class="row menu">
             <ul class="row site-menu list-unstyled">
-                <li><a href="#"><div class="menu-item">Кол арын</div></a></li>
-                <li><a class="root" href="{% url 'home:other' page='about' %}"><div class="menu-item">Редакция</div></a></li>
+                <li><a class="root" href="{% url 'home:index' %}"><div class="menu-item">Кол арын</div></a></li>
+                <li><a class="root" href="{% url 'home:about' page='about' %}"><div class="menu-item">Редакция</div></a></li>
                 <li><a href="#"><div class="menu-item">Харылзажыры</div></a></li>
             </ul>
         </nav>
-        <main class="row">
-            <aside class="col-4 col-lg-2 sidebar">
+        <div class="row">
+        <aside class="col-4 col-lg-2 sidebar">
                 Рубрики
-            </aside>
-            <div class="col-8 col-lg-10 content">
-                <h1>Cодержимое</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa dicta facere ipsam ipsum laudantium
-            quos saepe. Consectetur corporis deleniti eius explicabo illo necessitatibus odio officiis, quo soluta
-            sunt ullam unde?</p>
-            </div>
-
+        </aside>
+        <main class="col-8 col-lg-10 content">
+            {% bootstrap_messages %}
+            {% block content %}
+            {% endblock %}
         </main>
-
+        </div>
         <footer class="row footer">
             <p>Копирайт</p>
         </footer>
