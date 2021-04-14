@@ -6,9 +6,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title><img c> {% block title %}Кол Арын{% endblock %} - Алдын Кушкаш</title>
+    <title>{% block title %}Кол Арын{% endblock %} - Алдын Кушкаш</title>
 
     <link type="image/png" sizes="16x16" rel="icon" href="../static/images/logo.png">
     <link rel="stylesheet" href="{% static 'fonts/ttbun___.TTF' %}">
@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% bootstrap_javascript jquery='slim' %}
 </head>
 <body>
     <div class="container-fluid">
@@ -32,39 +33,42 @@
             <div class= "row nav-login">
                 <ul class = "col nav">
                     <li class="nav-item"><a class="nav-link" href="#">Регистрация</a> </li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                           aria-haspopup="true" aria-expanded="false">Пpoфиль</a>
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Пpoфиль</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Moи объявления</a>
+                            <a class="dropdown-item" href="{% url 'home:profile' %}">Moи объявления</a>
                             <a class="dropdown-item" href="#">Изменить личные данные</a>
                             <a class="dropdown-item" href="#">Изменить пароль</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Выйти</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Удалить</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'home:logout' %}">Выйти</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Удалить</a>
                         </div>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="#">Вход</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home:login' %}">Вход</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </header>
+
         <nav class="row menu">
             <ul class="row site-menu list-unstyled">
                 <li><a class="root" href="{% url 'home:index' %}"><div class="menu-item">Кол арын</div></a></li>
                 <li><a class="root" href="{% url 'home:about' page='about' %}"><div class="menu-item">Редакция</div></a></li>
-                <li><a href="#"><div class="menu-item">Харылзажыры</div></a></li>
+                <li><a class="root" href="{% url 'home:contact' page='contact' %}"><div class="menu-item">Харылзажыры</div></a></li>
             </ul>
         </nav>
         <div class="row">
-        <aside class="col-4 col-lg-2 sidebar">
+            <aside class="col-4 col-lg-2 sidebar">
                 Рубрики
-        </aside>
-        <main class="col-8 col-lg-10 content">
-            {% bootstrap_messages %}
-            {% block content %}
-            {% endblock %}
-        </main>
+            </aside>
+            <main class="col-8 col-lg-10 content">
+                {% bootstrap_messages %}
+                {% block content %}
+                {% endblock %}
+            </main>
         </div>
         <footer class="row footer">
             <p>Копирайт</p>
