@@ -54,7 +54,7 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def setup(self, request, *args, **kwargs):
         self.user_id = request.user.pk
-        return super().setup(request, *args,**kwargs)
+        return super().setup(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
         if not queryset:

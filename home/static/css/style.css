@@ -54,11 +54,17 @@ body {
     align-self: flex-end;
     margin-right: 20px;
 }
+.dropdown-menu {
+    background-color: orangered;
+}
+
 .nav a {
     color: #ffffff;
     font-weight: bold;
 }
-
+.nav a:hover {
+    background-color: orangered;
+}
 .menu {
     justify-content: center;
     align-items: center;
