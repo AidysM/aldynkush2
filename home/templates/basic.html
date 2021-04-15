@@ -14,10 +14,10 @@
     <link rel="stylesheet" href="{% static 'fonts/ttbun___.TTF' %}">
     <link rel="stylesheet" href="{% static 'fonts/ttbui___.TTF' %}">
     <link rel="stylesheet" href="{% static 'fonts/ttbub___.TTF' %}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">#}
     {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    {% bootstrap_javascript jquery='slim' %}
+    {% bootstrap_javascript jquery="slim" %}
 </head>
 <body>
     <div class="container-fluid">
@@ -27,23 +27,23 @@
                     <img class="logo" src="../static/images/logo.svg" alt="Logo" width="35" height="35">
                     Тыва Республиканың уруглар сеткүүлү
                 </p>
-                <span class="nullplus">0+</span>
+                <p class="nullplus">0+</p>
             </div>
             <span class="main-name">Алдын кушкаш</span>
             <div class= "row nav-login">
                 <ul class = "col nav">
-                    <li class="nav-item"><a class="nav-link" href="#">Регистрация</a> </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home:register' %}">Регистрация</a> </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Пpoфиль</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{% url 'home:profile' %}">Moи объявления</a>
-                            <a class="dropdown-item" href="#">Изменить личные данные</a>
-                            <a class="dropdown-item" href="#">Изменить пароль</a>
+                            <a class="dropdown-item" href="{% url 'home:profile_change' %}">Изменить личные данные</a>
+                            <a class="dropdown-item" href="{% url 'home:password_change' %}">Изменить пароль</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'home:logout' %}">Выйти</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Удалить</a>
+                            <a class="dropdown-item" href="{% url 'home:profile_delete' %}">Удалить</a>
                         </div>
                     </li>
                     {% else %}

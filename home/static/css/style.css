@@ -98,7 +98,7 @@ body {
     align-items: center;
 }
 .content {
-    height: 600px;
+    min-height: 700px;
     background-color: #f8f8f8;
 }
 .sidebar {
