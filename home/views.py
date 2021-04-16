@@ -135,8 +135,24 @@ def by_rubric(request, pk):
     return render(request, 'home/by_rubric.html', context)
 
 def detail(request, rubric_pk, pk):
-    ak = get_object_or_404(AK, pk=pk)
+    ak = AK.objects.get(pk=pk)
     ais = ak.additionalimage_set.all()
+    # comments = Comment.objects.filter(ak=pk, is_active=True)
+    # initial = {'ak': ak.pk}
+    # if request.user.is_authenticated:
+    #     initial['author'] = request.user.username
+    #     form_class = UserCommentForm
+    # else:
+    #     form_class = GuestCommentForm
+    # form = form_class(initial=initial)
+    # if request.method == 'POST':
+    #     c_form = form_class(request.POST)
+    #     if c_form.is_valid():
+    #         c_form.save()
+    #         messages.add_message(request, messages.SUCCESS, 'Комментарий добавлен')
+    #     else:
+    #         form = c_form
+    #         messages.add_message(request, messages.WARNING, 'Комментарий не добавлен')
     context = {'ak': ak, 'ais': ais}
     return render(request, 'home/detail.html', context)
 
@@ -163,4 +179,33 @@ def profile_ak_add(request):
         formset = AIFormSet()
     context = {'form': form, 'formset': formset}
     return render(request, 'home/profile_ak_add.html', context)
+
+@login_required
+def profile_ak_change(request, pk):
+    ak = get_object_or_404(AK, pk=pk)
+    if request.method=='POST':
+        form = AKForm(request.POST, request.FILES, instance=ak)
+        if form.is_valid():
+            ak = form.save()
+            formset = AIFormSet(request.POST, request.FILES, instance=ak)
+            if formset.is_valid():
+                formset.save()
+                messages.add_message(request, messages.SUCCESS, 'Запись исправлена')
+                return redirect('home:profile')
+    else:
+        form = AKForm(instance=ak)
+        formset = AIFormSet(instance=ak)
+    context = {'form': form, 'formset': formset}
+    return render(request, 'home/profile_ak_change.html', context)
+
+@login_required
+def profile_ak_delete(request, pk):
+    ak = get_object_or_404(AK, pk=pk)
+    if request.method == 'POST':
+        ak.delete()
+        messages.add_message(request, messages.SUCCESS, 'Запись удалена')
+        return redirect('home:profile')
+    else:
+        context = {'ak': ak}
+        return render(request, 'home/profile_ak_delete.html', context)
 

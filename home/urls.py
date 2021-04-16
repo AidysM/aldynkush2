@@ -2,7 +2,8 @@ from django.urls import path
 
 from .views import index, about_page, contact_page, AKLoginView, profile, AKLogoutView, ChangeUserInfoView
 from .views import AKPasswordChangeView, RegisterUserView, RegisterDoneView, user_activate, DeleteUserView
-from .views import by_rubric, detail, profile_ak_detail, profile_ak_add
+from .views import by_rubric, detail, profile_ak_detail, profile_ak_add, profile_ak_change, profile_ak_delete
+
 
 app_name = 'home'
 
@@ -11,6 +12,8 @@ urlpatterns = [
     path('accounts/password/change/', AKPasswordChangeView.as_view(), name='password_change'),
     path('accounts/profile/delete/', DeleteUserView.as_view(), name='profile_delete'),
     path('accounts/profile/change/', ChangeUserInfoView.as_view(), name='profile_change'),
+    path('accounts/profile/change/<int:pk>/', profile_ak_change, name='profile_ak_change'),
+    path('accounts/profile/delete/<int:pk>/', profile_ak_delete, name='profile_ak_delete'),
     path('accounts/profile/add/', profile_ak_add, name='profile_ak_add'),
     path('accounts/profile/<int:pk>/', profile_ak_detail, name='profile_ak_detail'),
     path('accounts/profile/', profile, name='profile'),

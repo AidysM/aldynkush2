@@ -1,11 +1,11 @@
-{% extends "layout/basic.html" %}
+{% extends "basic.html" %}
 
 {% load bootstrap4 %}
 
-{% block title %}Изменение объявления - Профиль пользователя{% endblock %}
+{% block title %}Изменение записи - Профиль пользователя{% endblock %}
 
 {% block content %}
-    <h2>Изменение объявления</h2>
+    <h1>Изменение записи</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form layout='horizontal' %}
