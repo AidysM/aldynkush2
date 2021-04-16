@@ -1,6 +1,6 @@
 {% extends "basic.html" %}
 
-{% block title %}{{ ak.title }} - {{ ak.rubric.name }}{% endblock %}
+{% block title %}{{ ak.title }} - Профиль пользователя{% endblock %}
 
 {% block content %}
 <div class="container-fluid mt-3">
@@ -26,5 +26,6 @@
         {% endfor %}
     </div>
 {% endif %}
-<p><a href="{% url 'home:profile' %}{{ all }}">Назад</a> </p>
+<hr>
+<p><a href="{% url 'home:profile' %}">Назад</a> </p>
 {% endblock %}
