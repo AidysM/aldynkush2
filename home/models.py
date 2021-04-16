@@ -1,11 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
+
+from .utilities import get_timestamp_path
+
 
 class AdvUser(AbstractUser):
     is_activated = models.BooleanField(default=True, db_index=True, verbose_name='Прошел активацию?')
     send_messages = models.BooleanField(default=True, verbose_name='Слать оповещения о новых комментариях?')
+    
+    def delete(self, *args, **kwargs):
+        for ak in self.ak_set.all():
+            ak.delete()
+        super(AdvUser, self).delete(*args, **kwargs)
 
-    class Meta:
+    class Meta(AbstractUser.Meta):
         pass
 
 class Rubric(models.Model):
@@ -45,4 +54,40 @@ class SubRubric(Rubric):
         ordering = ('super_rubric__order', 'super_rubric__name', 'order', 'name')
         verbose_name = 'Рубрика'
         verbose_name_plural = 'Рубрики'
+
+class AK(models.Model):
+    STATUS_CHOICES = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    )
+    rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT, verbose_name='Рубрика')
+    title = models.CharField(max_length=250, verbose_name='Заголовок')
+    slug = models.SlugField(max_length=250, unique_for_date='publish')
+    author = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name='Автор')
+    content = models.TextField(verbose_name='Содержание')
+    image = models.ImageField(blank=True, upload_to=get_timestamp_path, verbose_name='Изображение')
+    is_active = models.BooleanField(default=True, db_index=True, verbose_name='Выводить в списке?')
+    publish = models.DateTimeField(default=timezone.now())
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
+
+    def delete(self, *args, **kwargs):
+        for ai in self.additionalimage_set.all():
+            ai.delete()
+        super(AK, self).delete(*args, **kwargs)
+    
+    class Meta:
+        ordering = ('-publish',)
+
+    def __str__(self):
+        return self.title
+
+class AdditionalImage(models.Model):
+    ak = models.ForeignKey(AK, on_delete=models.CASCADE, verbose_name='Запись')
+    image = models.ImageField(upload_to=get_timestamp_path, verbose_name='Изображение')
+
+    class Meta:
+        verbose_name = 'Дополнительная иллюстрация'
+        verbose_name_plural = 'Дополнительные иллюстрации'
 

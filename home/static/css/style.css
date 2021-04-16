@@ -107,6 +107,13 @@ body {
     min-height: 700px;
     background-color: #f8f8f8;
 }
+img.main-image {
+    width: 300px;
+}
+img.additional-image {
+    width: 180px;
+}
+
 .sidebar {
 
     background-color: orangered;

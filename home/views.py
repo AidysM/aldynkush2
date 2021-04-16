@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from django.template import TemplateDoesNotExist
 from django.template.loader import get_template
@@ -12,14 +12,18 @@ from django.urls import reverse_lazy
 from django.core.signing import BadSignature
 from django.contrib.auth import logout
 from django.contrib import messages
+from django.core.paginator import Paginator
+from django.db.models import Q
 
-from .models import AdvUser
-from .forms import ChangeUserInfoForm, RegisterUserForm
+from .models import AdvUser, SubRubric, AK
+from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm, AKForm, AIFormSet
 from .utilities import signer
 
 
 def index(request):
-    return render(request, 'home/index.html')
+    aks = AK.objects.filter(is_active=True)[:10]
+    context = {'aks': aks}
+    return render(request, 'home/index.html', context)
 
 def about_page(request, page):
     try:
@@ -40,7 +44,9 @@ class AKLoginView(LoginView):
 
 @login_required
 def profile(request):
-    return render(request, 'home/profile.html')
+    aks = AK.objects.filter(author=request.user.pk)
+    context = {'aks': aks}
+    return render(request, 'home/profile.html', context)
 
 class AKLogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'home/logout.html'
@@ -110,5 +116,51 @@ class DeleteUserView(LoginRequiredMixin, DeleteView):
         return get_object_or_404(queryset, pk=self.user_id)
 
 def by_rubric(request, pk):
-    pass
+    rubric = get_object_or_404(SubRubric, pk=pk)
+    aks = AK.objects.filter(is_active=True, rubric=pk)
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        q = Q(title__icontains=keyword) | Q(content__icontains=keyword)
+        aks = aks.filter(q)
+    else:
+        keyword = ''
+    form = SearchForm(initial={'keyword': keyword})
+    paginator = Paginator(aks, 2)
+    if 'page' in request.GET:
+        page_num = request.GET['page']
+    else:
+        page_num = 1
+    page = paginator.get_page(page_num)
+    context = {'rubric': rubric, 'page': page, 'aks': page.object_list, 'form': form}
+    return render(request, 'home/by_rubric.html', context)
+
+def detail(request, rubric_pk, pk):
+    ak = get_object_or_404(AK, pk=pk)
+    ais = ak.additionalimage_set.all()
+    context = {'ak': ak, 'ais': ais}
+    return render(request, 'home/detail.html', context)
+
+@login_required
+def profile_ak_detail(request, rubric_pk, pk):
+    ak = get_object_or_404(AK, pk=pk)
+    ais = ak.additionalimage_set.all()
+    context = {'ak': ak, 'ais': ais}
+    return render(request, 'home/profile_ak_detail.html', context)
+
+@login_required
+def profile_ak_add(request):
+    if request.method == 'POST':
+        form = AKForm(request.POST, request.FILES)
+        if form.is_valid():
+            ak = form.save()
+            formset = AIFormSet(request.POST, request.FILES, instance=ak)
+            if formset.is_valid():
+                formset.save()
+                messages.add_message(request, messages.SUCCESS, 'Запись добавлена')
+                return redirect('home:profile')
+    else:
+        form = AKForm(initial={'author': request.user.pk})
+        formset = AIFormSet()
+    context = {'form': form, 'formset': formset}
+    return render(request, 'home/profile_ak_add.html', context)
 
