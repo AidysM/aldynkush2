@@ -108,10 +108,14 @@ body {
     background-color: #f8f8f8;
 }
 .sidebar {
-    /*grid-area: s;*/
+
     background-color: orangered;
 }
+.sidebar > span {
+    color: blue;
+    align-self: center;
+}
 .footer {
-    /*grid-area: f;*/
+
     background-color: #ff871c;
 }

@@ -9,14 +9,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>{% block title %}Кол Арын{% endblock %} - Алдын Кушкаш</title>
-
     <link type="image/png" sizes="16x16" rel="icon" href="../static/images/logo.png">
+
     <link rel="stylesheet" href="{% static 'fonts/ttbun___.TTF' %}">
     <link rel="stylesheet" href="{% static 'fonts/ttbui___.TTF' %}">
     <link rel="stylesheet" href="{% static 'fonts/ttbub___.TTF' %}">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {% bootstrap_css %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     {% bootstrap_javascript jquery='slim' %}
 </head>
 <body>
@@ -53,7 +55,6 @@
                 </ul>
             </div>
         </header>
-
         <nav class="row menu">
             <ul class="row site-menu list-unstyled">
                 <li><a class="root" href="{% url 'home:index' %}"><div class="menu-item">Кол арын</div></a></li>
@@ -62,8 +63,21 @@
             </ul>
         </nav>
         <div class="row">
-            <aside class="col-4 col-lg-2 sidebar">
-                Рубрики
+            <aside class="col-4 col-lg-2 nav flex-column sidebar">
+                {% comment %}<span class="nav-link root font-weight-bold">Медээлер</span>
+                <a class="nav-link" href="#">Делегейниң</a>
+                <a class="nav-link" href="#">Алдын Кушкаштың</a>
+                <a class="nav-link" href="#">Администрацияның</a>
+                <span class="nav-link root font-weight-bold">Тоолдар</span>
+                <a class="nav-link" href="#">Чоннуң тыва</a>
+                <a class="nav-link" href="#">Орус улустуң</a>
+                <a class="nav-link" href="#">Өске чоннарның</a>{% endcomment %}
+                {% for rubric in rubrics %}
+                    {% ifchanged rubric.super_rubric.pk %}
+                        <span class="nav-link root font-weight-bold">{{ rubric.super_rubric.name }}</span>
+                    {% endifchanged %}
+                    <a class="nav-link" href="{% url 'home:by_rubric' pk=rubric.pk %}">{{ rubric.name }}</a>
+                {% endfor %}
             </aside>
             <main class="col-8 col-lg-10 content">
                 {% bootstrap_messages %}
@@ -72,10 +86,11 @@
             </main>
         </div>
         <footer class="row footer">
-            <p>Копирайт</p>
+            <p class="text-right font-italic">&copy; Алдын кушкаш. </p>
+            <div> Автор иконок: <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/ru/" title="Flaticon">www.flaticon.com</a></div>
         </footer>
     </div>
-    <div>Автор иконок: <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/ru/" title="Flaticon">www.flaticon.com</a></div>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
