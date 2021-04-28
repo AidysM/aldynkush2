@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django_cleanup',
     'easy_thumbnails',
     'captcha',
+    'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +72,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'home.middlewares.ak_context_processor',
+                'cart.context_processors.cart',
             ],
         },
     },
@@ -142,7 +146,7 @@ EMAIL_HOST_PASSWORD = "10011979AKya"
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 MEDIA_URL = '/media/'
 
@@ -155,4 +159,6 @@ THUMBNAIL_ALIASES = {
     },
 }
 THUMBNAIL_BASEDIR = 'thumbnails'
+
+CART_SESSION_ID = 'cart'
 
