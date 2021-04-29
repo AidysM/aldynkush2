@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
 ]
 
 MIDDLEWARE = [
@@ -162,3 +163,16 @@ THUMBNAIL_BASEDIR = 'thumbnails'
 
 CART_SESSION_ID = 'cart'
 
+# Braintree settings
+BRAINTREE_MERCHANT_ID = 'j88ydr84fsptwczp'  # Merchant ID
+BRAINTREE_PUBLIC_KEY = '7zwk5w2yzt49mb7x'  # Public Key
+BRAINTREE_PRIVATE_KEY = 'cdaf62bbddd902861096340df243e7a0'  # Private Key
+
+import braintree
+
+BRAINTREE_CONF = braintree.Configuration(
+    braintree.Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+)
